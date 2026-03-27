@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Opiskelijaravintolat</title>
+    <link rel="stylesheet" href="css/main_style.css" />
+    <a href="profile.html" class="profile-nav">
+      <img src="img/picture8.jpg" alt="Profiili" />
+      <span class="profile-name">Opiskelija</span>
+    </a>
+  </head>
+  <body>
+    <header class="hero">
+      <h1>Opiskelijaravintolat</h1>
+      <p>Valitse ravintola ja tarkastele ruokalistaa</p>
+      <a href="#content" class="scroll-btn">↓ Selaa alas ↓</a>
+    </header>
+
+    <main id="content" class="page">
+      <input type="radio" name="restaurant" id="metropolia" checked />
+      <input type="radio" name="restaurant" id="unicafe" />
+      <input type="radio" name="restaurant" id="juvenes" />
+      <input type="radio" name="restaurant" id="arken" />
+      <input type="radio" name="restaurant" id="sodexo" />
+
+      <input type="radio" name="menu-view" id="paiva" checked />
+      <input type="radio" name="menu-view" id="viikko" />
+
+      <div class="container">
+        <aside class="sidebar">
+          <h2>Ravintolat</h2>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Hae ravintolaa..."
+          />
+
+          <div class="restaurant-list">
+            <label for="metropolia" class="restaurant-btn btn-metropolia"
+              >Metropolia Myyrmäki</label
+            >
+            <label for="unicafe" class="restaurant-btn btn-unicafe"
+              >Metropolia Myllypuro</label
+            >
+            <label for="juvenes" class="restaurant-btn btn-juvenes"
+              >Metropolia Karamalmi</label
+            >
+            <label for="arken" class="restaurant-btn btn-arken"
+              >Metropolia Arabia</label
+            >
+            <label for="sodexo" class="restaurant-btn btn-sodexo"
+              >Unicafe Kaivopiha</label
+            >
+          </div>
+        </aside>
+
+        <section class="content">
+          <div class="top-controls">
+            <h2 class="restaurant-title title-metropolia">
+              Metropolia Myyrmäki
+            </h2>
+            <h2 class="restaurant-title title-unicafe">Metropolia Myllypuro</h2>
+            <h2 class="restaurant-title title-juvenes">Metropolia Karamalmi</h2>
+            <h2 class="restaurant-title title-arken">Metropolia Arabia</h2>
+            <h2 class="restaurant-title title-sodexo">Unicafe Kaivopiha</h2>
+
+            <div class="menu-toggle">
+              <label for="paiva" class="toggle-btn">Päivä</label>
+              <label for="viikko" class="toggle-btn">Viikko</label>
+            </div>
+          </div>
+
+          <!-- Ravintolat -->
+          <div class="image-box image-metropolia">
+            <img src="img/picture4.jpg" alt="Metropolia Myyrmäki" />
+          </div>
+
+          <div class="image-box image-unicafe">
+            <img src="img/picture2.jpg" alt="Metropolia Myllypuro" />
+          </div>
+
+          <div class="image-box image-juvenes">
+            <img src="img/picture3.jpg" alt="Metropolia Karamalmi" />
+          </div>
+
+          <div class="image-box image-arken">
+            <img src="img/picture7.jpg" alt="Metropolia Arabia" />
+          </div>
+
+          <div class="image-box image-sodexo">
+            <img src="img/picture6.jpg" alt="Unicafe Kaivopiha" />
+          </div>
+
+          <div class="restaurant-content content-metropolia">
+            <div class="menu-day">
+              <div class="menu-section">
+                <h3>Tänään tarjolla</h3>
+
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Kanapasta</h4>
+                    <p>Kermainen kanapasta ja salaatti</p>
+                  </div>
+                </div>
+
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Kasviskeitto</h4>
+                    <p>Kasviskeitto ja leipä</p>
+                  </div>
+                </div>
+
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Lohikiusaus</h4>
+                    <p>Lohikiusaus ja salaattipöytä</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="menu-week">
+              <div class="menu-section">
+                <h3>Tämän viikon ruokalista</h3>
+
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Maanantai</h4>
+                    <p>Kanapasta, kasviskeitto</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Tiistai</h4>
+                    <p>Jauhelihapihvit, tomaattikeitto</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Keskiviikko</h4>
+                    <p>Lohikiusaus, kasvispasta</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Torstai</h4>
+                    <p>Broileriwok, linssikeitto</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Perjantai</h4>
+                    <p>Tortillabuffet, kasvislasagne</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="restaurant-content content-unicafe">
+            <div class="menu-day">
+              <div class="menu-section">
+                <h3>Tänään tarjolla</h3>
+
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Broilerikastike</h4>
+                    <p>Riisi ja salaatti</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Kasvislasagne</h4>
+                    <p>Lasagne ja tuoresalaatti</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Keitto</h4>
+                    <p>Päivän keitto ja leipä</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="menu-week">
+              <div class="menu-section">
+                <h3>Tämän viikon ruokalista</h3>
+
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Maanantai</h4>
+                    <p>Broilerikastike, kasvislasagne</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Tiistai</h4>
+                    <p>Lihapullat, pinaattikeitto</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Keskiviikko</h4>
+                    <p>Kalaleike, tofuwok</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Torstai</h4>
+                    <p>Hernekeitto, pannukakku</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Perjantai</h4>
+                    <p>Pizza, kasvispihvit</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="restaurant-content content-juvenes">
+            <div class="menu-day">
+              <div class="menu-section">
+                <h3>Tänään tarjolla</h3>
+
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Naudanlihapata</h4>
+                    <p>Perunat ja salaatti</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Falafelit</h4>
+                    <p>Jogurttikastike ja riisi</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Kasvissosekeitto</h4>
+                    <p>Leipä ja levite</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="menu-week">
+              <div class="menu-section">
+                <h3>Tämän viikon ruokalista</h3>
+
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Maanantai</h4>
+                    <p>Naudanlihapata, falafelit</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Tiistai</h4>
+                    <p>Pasta bolognese, kasviskeitto</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Keskiviikko</h4>
+                    <p>Kanawok, tofu curry</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Torstai</h4>
+                    <p>Kalapyörykät, pinaattiletut</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Perjantai</h4>
+                    <p>Hampurilaiset, vegewrapit</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="restaurant-content content-arken">
+            <div class="menu-day">
+              <div class="menu-section">
+                <h3>Tänään tarjolla</h3>
+
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Lohikeitto</h4>
+                    <p>Ruisleipä ja levite</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Kasvispata</h4>
+                    <p>Riisi ja salaatti</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Broileripasta</h4>
+                    <p>Parmesaani ja salaatti</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="menu-week">
+              <div class="menu-section">
+                <h3>Tämän viikon ruokalista</h3>
+
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Maanantai</h4>
+                    <p>Lohikeitto, kasvispata</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Tiistai</h4>
+                    <p>Broileripasta, tomaattikeitto</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Keskiviikko</h4>
+                    <p>Jauhelihaperunat, vegecurry</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Torstai</h4>
+                    <p>Kalaleike, linssipata</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Perjantai</h4>
+                    <p>Tortillat, kasvislasagne</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="restaurant-content content-sodexo">
+            <div class="menu-day">
+              <div class="menu-section">
+                <h3>Tänään tarjolla</h3>
+
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Jauhelihalasagne</h4>
+                    <p>Salaatti ja leipä</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Kasviswokki</h4>
+                    <p>Nuudelit ja kastike</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Kanakeitto</h4>
+                    <p>Leipä ja levite</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="menu-week">
+              <div class="menu-section">
+                <h3>Tämän viikon ruokalista</h3>
+
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Maanantai</h4>
+                    <p>Jauhelihalasagne, kasviswokki</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Tiistai</h4>
+                    <p>Kanakeitto, pinaattiohukaiset</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Keskiviikko</h4>
+                    <p>Kalapihvit, tofuwok</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Torstai</h4>
+                    <p>Hernekeitto, pannukakku</p>
+                  </div>
+                </div>
+                <div class="meal-card">
+                  <div class="meal-info">
+                    <h4>Perjantai</h4>
+                    <p>Kebabriisi, vegepihvit</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>users.metropolia.fi · Yksilötehtävä</footer>
+  </body>
+</html>

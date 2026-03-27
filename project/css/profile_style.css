@@ -1,0 +1,90 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-hero {
+  width: 100%;
+  height: 100vh;
+
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('../img/picture1.jpg');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+}
+
+/* PROFILE CARD */
+.profile-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* PROFILE IMAGE */
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 3px solid #ea580c;
+}
+
+.profile-box {
+  background: #fff7ed;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+/* PROFILE TEKSTIT */
+.profile-card h1 {
+  color: #ea580c;
+  margin-bottom: 0.5rem;
+  font-family: Arial, sans-serif;
+}
+
+.profile-info {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.profile-info p {
+  margin-bottom: 0.5rem;
+}
+
+/* BACK BUTTON */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-family: Arial, sans-serif;
+
+  text-decoration: none;
+  background: white;
+  color: #ea580c;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-weight: bold;
+
+  transition: 0.2s;
+}
+
+.back-btn:hover {
+  background: #ffedd5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
