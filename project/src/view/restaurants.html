@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Opiskelijaravintolat</title>
+    <link rel="stylesheet" href="../../css/main_style.css" />
+    <link rel="stylesheet" href="../../css/restaurants_style.css" />
+  </head>
+  <body>
+    <script>
+      window.RESTAURANT_API_BASE_URL = 'https://users.metropolia.fi/api/v1';
+    </script>
+
+    <header class="header">
+      <div class="header-container">
+        <h1>Opiskelijaravintolat</h1>
+        <nav class="menu-toggle">
+          <button class="menu-btn">☰</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- Search and Filter Section -->
+      <section class="search-section">
+        <div class="search-container">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Hae ravintoloita..."
+            aria-label="Hae ravintoloita nimellä tai osoitteella"
+          />
+          <button class="search-btn" id="searchBtn">Hae</button>
+        </div>
+
+        <div class="menu-type-buttons">
+          <button
+            class="menu-btn-daily active"
+            id="dailyBtn"
+            aria-pressed="true"
+          >
+            Päivän ruokalista
+          </button>
+          <button class="menu-btn-weekly" id="weeklyBtn" aria-pressed="false">
+            Viikon ruokalista
+          </button>
+        </div>
+      </section>
+
+      <div class="content-wrapper">
+        <!-- Restaurants List -->
+        <aside class="restaurants-sidebar">
+          <h2>Ravintolat</h2>
+          <div id="restaurantsList" class="restaurants-list">
+            <div class="loading">Ladataan ravintoloita...</div>
+          </div>
+        </aside>
+
+        <!-- Menu Display -->
+        <section class="menu-section">
+          <div id="menuContent" class="menu-content">
+            <div class="empty-state">
+              <p>Valitse ravintola nähdäksesi ruokalistan</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2026 Opiskelijaravintolat. Kaikki oikeudet pidätetään.</p>
+    </footer>
+
+    <script type="module" src="../js/restaurants.js"></script>
+  </body>
+</html>
