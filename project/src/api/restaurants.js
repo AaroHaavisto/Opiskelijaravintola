@@ -6,7 +6,7 @@
 const API_BASE_URLS = [
   window.RESTAURANT_API_BASE_URL,
   '/api/v1',
-  'https://users.metropolia.fi/api/v1',
+  'https://media2.edu.metropolia.fi/restaurant/api/v1',
 ].filter(Boolean);
 
 async function fetchJson(path) {

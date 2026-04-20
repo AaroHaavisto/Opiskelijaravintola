@@ -13,6 +13,77 @@ let allRestaurants = [];
 let selectedRestaurantId = null;
 let isDaily = true; // true = daily, false = weekly
 
+const MOCK_RESTAURANTS = [
+  {
+    _id: 'mock-1',
+    name: 'Metropolia Myyrmäki',
+    address: 'Jukka Mallin katu 18',
+    city: 'Vantaa',
+  },
+  {
+    _id: 'mock-2',
+    name: 'Metropolia Myllypuro',
+    address: 'Myllypurontie 1',
+    city: 'Helsinki',
+  },
+  {
+    _id: 'mock-3',
+    name: 'Unicafe Kaivopiha',
+    address: 'Yliopistonkatu 3',
+    city: 'Helsinki',
+  },
+];
+
+function mockDailyMenu(restaurantId) {
+  const menus = {
+    'mock-1': {
+      courses: [
+        {name: 'Kanapasta', price: '8.20 €', diets: 'L'},
+        {name: 'Kasviskeitto', price: '6.50 €', diets: 'VEG'},
+      ],
+    },
+    'mock-2': {
+      courses: [
+        {name: 'Lohikiusaus', price: '8.90 €', diets: 'L'},
+        {name: 'Kasvislasagne', price: '7.10 €', diets: 'VEG'},
+      ],
+    },
+    'mock-3': {
+      courses: [
+        {name: 'Broilerikastike', price: '8.40 €', diets: 'G'},
+        {name: 'Falafelit', price: '7.00 €', diets: 'VEG'},
+      ],
+    },
+  };
+
+  return menus[restaurantId] || menus['mock-1'];
+}
+
+function mockWeeklyMenu(restaurantId) {
+  const days = [
+    {
+      date: 'Maanantai',
+      courses: mockDailyMenu(restaurantId).courses,
+    },
+    {
+      date: 'Tiistai',
+      courses: [
+        {name: 'Jauhelihakastike', price: '8.20 €', diets: 'L'},
+        {name: 'Kasviscurry', price: '7.00 €', diets: 'VEG'},
+      ],
+    },
+    {
+      date: 'Keskiviikko',
+      courses: [
+        {name: 'Tortillat', price: '8.10 €', diets: 'L'},
+        {name: 'Linssikeitto', price: '6.90 €', diets: 'VEG'},
+      ],
+    },
+  ];
+
+  return {days};
+}
+
 function normalizeRestaurants(response) {
   if (Array.isArray(response)) {
     return response;
@@ -102,7 +173,12 @@ async function loadRestaurants() {
     displayRestaurants(allRestaurants);
   } catch (error) {
     console.error('Error loading restaurants:', error);
-    restaurantsList.innerHTML = `<div class="error">Ravintoloiden lataaminen epäonnistui. Tarkista API-osoite ja CORS-asetukset.</div>`;
+    allRestaurants = MOCK_RESTAURANTS;
+    displayRestaurants(allRestaurants);
+    restaurantsList.insertAdjacentHTML(
+      'beforebegin',
+      '<div class="empty" style="margin-bottom: 1rem;">API ei vastannut, näytetään demodata.</div>'
+    );
   }
 }
 
@@ -176,8 +252,13 @@ async function loadMenu(restaurantId) {
     displayMenu(normalizeMenu(menu));
   } catch (error) {
     console.error('Error loading menu:', error);
-    menuContent.innerHTML =
-      '<div class="error">Ruokalistan lataaminen epäonnistui. API ei vastannut tai CORS esti pyynnön.</div>';
+    displayMenu(
+      isDaily ? mockDailyMenu(restaurantId) : mockWeeklyMenu(restaurantId)
+    );
+    menuContent.insertAdjacentHTML(
+      'afterbegin',
+      '<div class="empty" style="margin-bottom: 1rem;">API ei vastannut, näytetään demoruokalista.</div>'
+    );
   }
 }
 
