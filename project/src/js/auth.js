@@ -15,6 +15,7 @@ function normalizeUser(user) {
   return {
     ...user,
     favouriteRestaurants,
+    avatar: user.avatar || null,
   };
 }
 
@@ -75,6 +76,7 @@ export function registerUser({username, email, password, favouriteRestaurant}) {
     email: email.trim(),
     password,
     favouriteRestaurants: [],
+    avatar: null,
   };
 
   users.push(newUser);
@@ -114,6 +116,18 @@ export function updateCurrentUser(nextUser) {
   writeUsers(updatedUsers);
   localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(normalizedUser));
   return normalizedUser;
+}
+
+export function setUserAvatar(avatarDataUrl) {
+  const currentUser = getCurrentUser();
+  if (!currentUser) {
+    return null;
+  }
+
+  return updateCurrentUser({
+    ...currentUser,
+    avatar: avatarDataUrl,
+  });
 }
 
 export function toggleFavouriteRestaurant(restaurantId) {

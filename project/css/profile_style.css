@@ -34,14 +34,48 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* PROFILE IMAGE */
-.profile-img {
+.profile-image-wrap {
+  position: relative;
+  display: inline-flex;
   width: 120px;
   height: 120px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+/* PROFILE IMAGE */
+.profile-img {
+  width: 130px;
+  height: 115px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 1rem;
   border: 3px solid #ea580c;
+  display: block;
+}
+
+.avatar-input {
+  display: none;
+}
+
+.avatar-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  color: white;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+.profile-image-wrap:hover .avatar-overlay {
+  opacity: 1;
 }
 
 .profile-box {
@@ -65,33 +99,6 @@ body {
 
 .profile-info p {
   margin-bottom: 0.5rem;
-}
-
-.favorites-block {
-  margin-top: 0.9rem;
-  text-align: left;
-}
-
-.favorites-block strong {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #c2410c;
-}
-
-.favorites-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-}
-
-.favorites-list li {
-  background: #fff7ed;
-  border: 1px solid #fed7aa;
-  border-radius: 999px;
-  padding: 0.55rem 0.85rem;
 }
 
 /* BACK BUTTON */

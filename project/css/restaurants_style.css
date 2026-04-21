@@ -224,6 +224,37 @@ body {
   flex-wrap: wrap;
 }
 
+.view-filter-bar {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.view-filter-btn {
+  border: 1px solid var(--border-color);
+  background: #fff7ed;
+  color: var(--text-color);
+  border-radius: 999px;
+  padding: 0.65rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.view-filter-btn.active {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.view-filter-btn:hover {
+  border-color: var(--primary-color);
+}
+
 .menu-btn-daily,
 .menu-btn-weekly {
   flex: 1;

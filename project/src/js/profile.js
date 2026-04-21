@@ -1,52 +1,39 @@
-import {getCurrentUser, logout, requireAuth} from './auth.js';
-
-const RESTAURANTS_CACHE_KEY = 'or_restaurants_cache';
-
-function readRestaurantCache() {
-  try {
-    const restaurants = JSON.parse(
-      localStorage.getItem(RESTAURANTS_CACHE_KEY) || '[]'
-    );
-    return Array.isArray(restaurants) ? restaurants : [];
-  } catch {
-    return [];
-  }
-}
-
-function getRestaurantNameById(restaurantId) {
-  const restaurants = readRestaurantCache();
-  return (
-    restaurants.find(restaurant => restaurant._id === restaurantId)?.name ||
-    restaurantId
-  );
-}
+import {getCurrentUser, logout, requireAuth, setUserAvatar} from './auth.js';
 
 const user = requireAuth();
 
 if (user) {
   const usernameEl = document.getElementById('profileUsername');
   const emailEl = document.getElementById('profileEmail');
-  const favouritesListEl = document.getElementById(
-    'profileFavouriteRestaurants'
-  );
   const heroNameEl = document.getElementById('profileHeroName');
+  const avatarImg = document.getElementById('profileAvatar');
+  const avatarInput = document.getElementById('avatarInput');
 
   usernameEl.textContent = user.username;
   heroNameEl.textContent = user.username;
   emailEl.textContent = user.email || '-';
 
-  const favourites = Array.isArray(user.favouriteRestaurants)
-    ? user.favouriteRestaurants
-    : [];
+  if (avatarImg) {
+    avatarImg.src = user.avatar || '../../img/picture8.jpg';
+  }
 
-  if (favouritesListEl) {
-    favouritesListEl.innerHTML = favourites.length
-      ? favourites
-          .map(
-            restaurantId => `<li>${getRestaurantNameById(restaurantId)}</li>`
-          )
-          .join('')
-      : '<li>Ei vielä suosikkeja</li>';
+  if (avatarInput) {
+    avatarInput.addEventListener('change', event => {
+      const file = event.target.files?.[0];
+      if (!file) {
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const avatarDataUrl = String(reader.result || '');
+        setUserAvatar(avatarDataUrl);
+        if (avatarImg) {
+          avatarImg.src = avatarDataUrl;
+        }
+      };
+      reader.readAsDataURL(file);
+    });
   }
 }
 

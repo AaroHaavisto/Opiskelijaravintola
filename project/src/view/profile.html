@@ -12,8 +12,21 @@
       <button type="button" class="logout-btn" id="logoutBtn">Logout</button>
 
       <div class="profile-card">
-        <img src="../../img/picture8.jpg" alt="Profiili" class="profile-img" />
-
+        <label class="profile-image-wrap" for="avatarInput">
+          <img
+            src="../../img/picture8.jpg"
+            alt="Profiili"
+            class="profile-img"
+            id="profileAvatar"
+          />
+          <span class="avatar-overlay">Vaihda kuva</span>
+        </label>
+        <input
+          type="file"
+          id="avatarInput"
+          accept="image/*"
+          class="avatar-input"
+        />
         <h1 id="profileHeroName">Opiskelija</h1>
         <p>Metropolia AMK</p>
         <div class="profile-box">
@@ -23,10 +36,6 @@
               <span id="profileUsername">-</span>
             </p>
             <p><strong>Sähköposti:</strong> <span id="profileEmail">-</span></p>
-            <div class="favorites-block">
-              <strong>Tykkätyt ravintolat:</strong>
-              <ul id="profileFavouriteRestaurants" class="favorites-list"></ul>
-            </div>
           </div>
         </div>
       </div>

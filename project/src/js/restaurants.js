@@ -18,6 +18,8 @@ import {filterRestaurants, sortRestaurants} from '../utils/search.js';
 let allRestaurants = [];
 let selectedRestaurantId = null;
 let isDaily = true; // true = daily, false = weekly
+let currentSearchTerm = '';
+let showOnlyFavorites = false;
 
 const MOCK_RESTAURANTS = [
   {
@@ -132,7 +134,9 @@ const weeklyBtn = document.getElementById('weeklyBtn');
 const restaurantsList = document.getElementById('restaurantsList');
 const menuContent = document.getElementById('menuContent');
 const heroProfileName = document.getElementById('heroProfileName');
+const heroAvatar = document.getElementById('heroAvatar');
 const logoutBtn = document.getElementById('logoutBtn');
+const viewFilterButtons = document.querySelectorAll('.view-filter-btn');
 const RESTAURANTS_CACHE_KEY = 'or_restaurants_cache';
 
 function saveRestaurantCache(restaurants) {
@@ -159,6 +163,19 @@ function getFavouriteRestaurantIds() {
 
 function isFavouriteRestaurant(restaurantId) {
   return getFavouriteRestaurantIds().includes(restaurantId);
+}
+
+function getVisibleRestaurants() {
+  const searchFiltered = filterRestaurants(allRestaurants, currentSearchTerm);
+
+  if (!showOnlyFavorites) {
+    return searchFiltered;
+  }
+
+  const favouriteIds = new Set(getFavouriteRestaurantIds());
+  return searchFiltered.filter(restaurant =>
+    favouriteIds.has(getRestaurantId(restaurant))
+  );
 }
 
 function renderRestaurantCard(restaurant) {
@@ -189,7 +206,7 @@ function renderRestaurantCard(restaurant) {
 }
 
 function refreshRestaurantList() {
-  displayRestaurants(allRestaurants);
+  displayRestaurants(getVisibleRestaurants());
 }
 
 /**
@@ -203,6 +220,10 @@ async function init() {
 
   if (heroProfileName) {
     heroProfileName.textContent = currentUser.username || 'Opiskelija';
+  }
+
+  if (heroAvatar) {
+    heroAvatar.src = currentUser.avatar || '../../img/picture8.jpg';
   }
 
   if (logoutBtn) {
@@ -220,6 +241,19 @@ async function init() {
     searchBtn.addEventListener('click', handleSearch);
     searchInput.addEventListener('keypress', e => {
       if (e.key === 'Enter') handleSearch();
+    });
+
+    viewFilterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        showOnlyFavorites = button.dataset.filter === 'favorites';
+        viewFilterButtons.forEach(filterButton => {
+          filterButton.classList.toggle(
+            'active',
+            filterButton.dataset.filter === button.dataset.filter
+          );
+        });
+        refreshRestaurantList();
+      });
     });
 
     dailyBtn.addEventListener('click', () => {
@@ -253,12 +287,12 @@ async function loadRestaurants() {
     allRestaurants = normalizeRestaurants(await getRestaurants());
     allRestaurants = sortRestaurants(allRestaurants);
     saveRestaurantCache(allRestaurants);
-    displayRestaurants(allRestaurants);
+    displayRestaurants(getVisibleRestaurants());
   } catch (error) {
     console.error('Error loading restaurants:', error);
     allRestaurants = MOCK_RESTAURANTS;
     saveRestaurantCache(allRestaurants);
-    displayRestaurants(allRestaurants);
+    displayRestaurants(getVisibleRestaurants());
     restaurantsList.insertAdjacentHTML(
       'beforebegin',
       '<div class="empty" style="margin-bottom: 1rem;">API ei vastannut, näytetään demodata.</div>'
@@ -308,9 +342,8 @@ function displayRestaurants(restaurants) {
  * Handle search
  */
 function handleSearch() {
-  const searchTerm = searchInput.value;
-  const filtered = filterRestaurants(allRestaurants, searchTerm);
-  displayRestaurants(filtered);
+  currentSearchTerm = searchInput.value;
+  refreshRestaurantList();
 }
 
 /**
