@@ -67,6 +67,33 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.favorites-block {
+  margin-top: 0.9rem;
+  text-align: left;
+}
+
+.favorites-block strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #c2410c;
+}
+
+.favorites-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.favorites-list li {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 999px;
+  padding: 0.55rem 0.85rem;
+}
+
 /* BACK BUTTON */
 .back-btn {
   position: absolute;

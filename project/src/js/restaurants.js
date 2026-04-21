@@ -7,7 +7,12 @@ import {
   getDailyMenu,
   getWeeklyMenu,
 } from '../api/restaurants.js';
-import {logout, requireAuth} from './auth.js';
+import {
+  getCurrentUser,
+  logout,
+  requireAuth,
+  toggleFavouriteRestaurant,
+} from './auth.js';
 import {filterRestaurants, sortRestaurants} from '../utils/search.js';
 
 let allRestaurants = [];
@@ -128,6 +133,64 @@ const restaurantsList = document.getElementById('restaurantsList');
 const menuContent = document.getElementById('menuContent');
 const heroProfileName = document.getElementById('heroProfileName');
 const logoutBtn = document.getElementById('logoutBtn');
+const RESTAURANTS_CACHE_KEY = 'or_restaurants_cache';
+
+function saveRestaurantCache(restaurants) {
+  localStorage.setItem(RESTAURANTS_CACHE_KEY, JSON.stringify(restaurants));
+}
+
+function readRestaurantCache() {
+  try {
+    const restaurants = JSON.parse(
+      localStorage.getItem(RESTAURANTS_CACHE_KEY) || '[]'
+    );
+    return Array.isArray(restaurants) ? restaurants : [];
+  } catch {
+    return [];
+  }
+}
+
+function getFavouriteRestaurantIds() {
+  const currentUser = getCurrentUser();
+  return Array.isArray(currentUser?.favouriteRestaurants)
+    ? currentUser.favouriteRestaurants
+    : [];
+}
+
+function isFavouriteRestaurant(restaurantId) {
+  return getFavouriteRestaurantIds().includes(restaurantId);
+}
+
+function renderRestaurantCard(restaurant) {
+  const restaurantId = getRestaurantId(restaurant);
+  const favouriteClass = isFavouriteRestaurant(restaurantId)
+    ? 'is-favourite'
+    : '';
+  const heartLabel = isFavouriteRestaurant(restaurantId)
+    ? 'Poista suosikeista'
+    : 'Lisää suosikiksi';
+
+  return `
+    <div class="restaurant-item ${favouriteClass}" data-id="${restaurantId}" role="button" tabindex="0">
+      <div class="restaurant-main">
+        <div class="restaurant-name">${getRestaurantName(restaurant)}</div>
+        <div class="restaurant-address">${restaurant.address || ''}</div>
+      </div>
+      <button
+        type="button"
+        class="favorite-btn ${favouriteClass}"
+        data-favorite-id="${restaurantId}"
+        aria-label="${heartLabel}"
+      >
+        ${isFavouriteRestaurant(restaurantId) ? '♥' : '♡'}
+      </button>
+    </div>
+  `;
+}
+
+function refreshRestaurantList() {
+  displayRestaurants(allRestaurants);
+}
 
 /**
  * Initialize the app
@@ -189,10 +252,12 @@ async function loadRestaurants() {
       '<div class="loading">Ladataan ravintoloita...</div>';
     allRestaurants = normalizeRestaurants(await getRestaurants());
     allRestaurants = sortRestaurants(allRestaurants);
+    saveRestaurantCache(allRestaurants);
     displayRestaurants(allRestaurants);
   } catch (error) {
     console.error('Error loading restaurants:', error);
     allRestaurants = MOCK_RESTAURANTS;
+    saveRestaurantCache(allRestaurants);
     displayRestaurants(allRestaurants);
     restaurantsList.insertAdjacentHTML(
       'beforebegin',
@@ -211,21 +276,30 @@ function displayRestaurants(restaurants) {
     return;
   }
 
-  restaurantsList.innerHTML = restaurants
-    .map(
-      restaurant => `
-    <button class="restaurant-item" data-id="${getRestaurantId(restaurant)}">
-      <div class="restaurant-name">${getRestaurantName(restaurant)}</div>
-      <div class="restaurant-address">${restaurant.address || ''}</div>
-    </button>
-  `
-    )
-    .join('');
+  restaurantsList.innerHTML = restaurants.map(renderRestaurantCard).join('');
 
   // Add click listeners to restaurant items
   document.querySelectorAll('.restaurant-item').forEach(item => {
     item.addEventListener('click', () => {
       selectRestaurant(item.dataset.id);
+    });
+  });
+
+  document.querySelectorAll('.favorite-btn').forEach(button => {
+    button.addEventListener('click', event => {
+      event.stopPropagation();
+      const restaurantId = button.dataset.favoriteId;
+      toggleFavouriteRestaurant(restaurantId);
+      refreshRestaurantList();
+    });
+  });
+
+  document.querySelectorAll('.restaurant-item').forEach(item => {
+    item.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        selectRestaurant(item.dataset.id);
+      }
     });
   });
 }

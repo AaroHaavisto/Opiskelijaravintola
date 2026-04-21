@@ -282,7 +282,12 @@ body {
 }
 
 .restaurant-item {
-  padding: 0.75rem 1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem;
   background: var(--light-color);
   border: 2px solid transparent;
   border-radius: 8px;
@@ -290,6 +295,11 @@ body {
   cursor: pointer;
   transition: all 0.2s;
   font-size: 0.95rem;
+}
+
+.restaurant-item:focus-visible {
+  outline: 3px solid rgba(251, 146, 60, 0.45);
+  outline-offset: 2px;
 }
 
 .restaurant-item:hover {
@@ -301,6 +311,16 @@ body {
   background-color: var(--primary-color);
   color: white;
   border-color: var(--primary-color);
+}
+
+.restaurant-item.is-favourite {
+  border-color: #fb923c;
+  box-shadow: 0 0 0 1px rgba(251, 146, 60, 0.2);
+}
+
+.restaurant-main {
+  flex: 1;
+  min-width: 0;
 }
 
 .restaurant-name {
@@ -315,6 +335,37 @@ body {
 
 .restaurant-item.active .restaurant-address {
   opacity: 0.9;
+}
+
+.favorite-btn {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #dc2626;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.favorite-btn:hover {
+  transform: scale(1.05);
+  background: #fff;
+}
+
+.restaurant-item.is-favourite .restaurant-name {
+  color: #c2410c;
+}
+
+.favorite-btn.is-favourite {
+  background: #fee2e2;
+  color: #dc2626;
 }
 
 /* Menu Section */
