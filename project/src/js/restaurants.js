@@ -8,10 +8,6 @@ import {
   getWeeklyMenu,
 } from '../api/restaurants.js';
 import {
-  mountRestaurantsMap,
-  updateRestaurantsMap,
-} from './restaurants-map-react.js';
-import {
   getCurrentUser,
   logout,
   requireAuth,
@@ -28,6 +24,12 @@ let selectedCity = 'all';
 let selectedProvider = 'all';
 let userLocation = null;
 let nearestRestaurantId = null;
+let isMapReady = false;
+
+const mapController = {
+  mount: () => {},
+  update: () => {},
+};
 
 const MOCK_RESTAURANTS = [
   {
@@ -367,8 +369,22 @@ const providerFilter = document.getElementById('providerFilter');
 const restaurantsMapRoot = document.getElementById('restaurantsMapRoot');
 const RESTAURANTS_CACHE_KEY = 'or_restaurants_cache';
 
-if (restaurantsMapRoot) {
-  mountRestaurantsMap(restaurantsMapRoot);
+async function initializeMap() {
+  if (!restaurantsMapRoot) {
+    return;
+  }
+
+  try {
+    const mapModule = await import('./restaurants-map-react.js');
+    mapController.mount = mapModule.mountRestaurantsMap;
+    mapController.update = mapModule.updateRestaurantsMap;
+    mapController.mount(restaurantsMapRoot);
+    isMapReady = true;
+  } catch (error) {
+    console.warn('Map module unavailable, continuing without map:', error);
+    restaurantsMapRoot.innerHTML =
+      '<div class="map-empty-state">Karttaa ei voitu ladata t&auml;ss&auml; ymp&auml;rist&ouml;ss&auml;.</div>';
+  }
 }
 
 function saveRestaurantCache(restaurants) {
@@ -448,18 +464,22 @@ function refreshRestaurantList() {
   const visibleRestaurants = getVisibleRestaurants();
   updateNearestRestaurant(visibleRestaurants);
   displayRestaurants(visibleRestaurants);
-  updateRestaurantsMap({
-    restaurants: visibleRestaurants,
-    selectedRestaurantId,
-    nearestRestaurantId,
-    onSelectRestaurant: selectRestaurant,
-  });
+  if (isMapReady) {
+    mapController.update({
+      restaurants: visibleRestaurants,
+      selectedRestaurantId,
+      nearestRestaurantId,
+      onSelectRestaurant: selectRestaurant,
+    });
+  }
 }
 
 /**
  * Initialize the app
  */
 async function init() {
+  await initializeMap();
+
   const currentUser = requireAuth();
   if (!currentUser) {
     return;
@@ -638,12 +658,14 @@ async function selectRestaurant(restaurantId) {
     .querySelector(`[data-id="${restaurantId}"]`)
     ?.classList.add('active');
 
-  updateRestaurantsMap({
-    restaurants: getVisibleRestaurants(),
-    selectedRestaurantId,
-    nearestRestaurantId,
-    onSelectRestaurant: selectRestaurant,
-  });
+  if (isMapReady) {
+    mapController.update({
+      restaurants: getVisibleRestaurants(),
+      selectedRestaurantId,
+      nearestRestaurantId,
+      onSelectRestaurant: selectRestaurant,
+    });
+  }
 
   // Load and display menu
   await loadMenu(restaurantId);
